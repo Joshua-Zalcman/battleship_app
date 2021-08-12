@@ -1,4 +1,4 @@
-## Battleship Game
+# Battleship Game
 
 ![game_screen](img/game_screen.png)
 
@@ -6,7 +6,7 @@ This is an early project of mine that is a simplified version of the game "Battl
 
 ## Getting Started
 
-Click [here](https://mock-api-gym-website.netlify.app/) to visit working App
+Click [here](https://vigilant-roentgen-7d6c39.netlify.app/) to visit working App
 
 ## Future Enhancements
 
