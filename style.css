@@ -1,0 +1,188 @@
+body {
+	font-family: 'Russo One', Arial;
+	margin: 0px;
+}
+#preload {
+	background-color: #f4f4f4;
+	color: #102836;
+}
+
+button {
+	font-family: Lato;
+	color: white;
+	background-color: #102836;
+	border-radius: 4px;
+	border: none;
+}
+button:hover {
+	cursor: pointer;
+	color: red;
+}
+#light {
+	--background-color: #f4f4f4;
+	--color: #102836;
+	animation: changetolight;
+	animation-duration: 1s;
+	animation-timing-function: ease-in;
+	animation-fill-mode: forwards;
+}
+@keyframes changetolight {
+	0% {
+		background-color: #333;
+		color: #f4f4f4;
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
+	100% {
+		background-color: var(--background-color);
+		color: var(--color);
+		text-shadow: none;
+	}
+}
+#dark {
+	--background-color: #333;
+	--color: #75d797;
+	animation: changetodark;
+	animation-duration: 1s;
+	animation-timing-function: ease-in;
+	animation-fill-mode: forwards;
+}
+@keyframes changetodark {
+	0% {
+		background-color: #f4f4f4;
+		color: #102836;
+		text-shadow: none;
+	}
+	100% {
+		background-color: var(--background-color);
+		color: var(--color);
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
+}
+
+#header-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+}
+
+#header-container h1 {
+	text-align: center;
+	text-transform: uppercase;
+}
+.nav {
+	width: 100%;
+	text-shadow: none;
+} /*#3E4754*/
+.nav ul {
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-content: center;
+	align-items: center;
+	padding: 0;
+}
+.nav ul li:nth-child(1) {
+	font-family: 'Russo One';
+}
+.nav ul li {
+	margin: 0 10px;
+	font-family: Lato;
+}
+
+.main-container {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 0 5px;
+}
+
+.game-container {
+	width: 75%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	font-family: Lato;
+}
+@media only screen and (max-width: 1450px) {
+	.game-container {
+		flex-direction: column;
+	}
+}
+.game-container h2 {
+	font-family: 'Russo One';
+}
+
+.column {
+	width: 50px;
+	height: 50px;
+	border: 1px solid black;
+	background-color: lightblue;
+	text-shadow: none;
+	display: inline-block;
+	color: #102836;
+	margin: -2px;
+	padding: 2px 0px 0px 2px;
+}
+
+.sidebar {
+	width: 20%;
+	margin: 10px;
+}
+.sidebar p {
+	font-family: Lato;
+}
+.ship-img-row {
+	display: flex;
+	flex-direction: row;
+	margin: 15px 0;
+	align-items: center;
+	align-content: center;
+}
+
+.sidebar-ship-img {
+	width: 120px;
+	height: 25px;
+	background-color: darkgrey;
+	color: #102836;
+	text-shadow: none;
+	padding-top: 3px;
+	text-align: center;
+	border-radius: 4px 4px 4px 15px;
+	display: inline-block;
+}
+.hit-counter {
+	width: 15px;
+	height: 15px;
+	background-color: white;
+	border: 2px solid #102836;
+	border-radius: 15px;
+	display: none;
+	margin: 0 3px;
+}
+#mark-hit {
+	animation: colorhit;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+}
+@keyframes colorhit {
+	0% {
+		background-color: white;
+	}
+	100% {
+		background-color: red;
+	}
+}
+
+#player-board #occupied {
+	background-color: darkgrey;
+}
+#available {
+	background-color: lightgreen;
+}
+
+#reset-button {
+	display: inline;
+}

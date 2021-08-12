@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Battleship</title>
+	<link href="https://fonts.googleapis.com/css2?family=Lato&family=Orbitron&family=Russo+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body class="body" id="preload" >
+<!--main text-->
+<header id="header">
+	<div id="header-container">
+		<h1>Battleship</h1>
+		
+		<h2 id="game-over" style="display: none;"></h2>
+	</div>
+	
+</header>
+
+<nav class="nav">
+	<ul>
+		<li>Settings:</li>
+		<li><input type="checkbox" name="again" id="again" checked="true" >Go again after hit </input></li>
+		<li>Difficulty:
+		<input type="radio" id="easy" name="difficulty" checked="true" >Easy<input type="radio" id="hard" name="difficulty" >Hard</input></li>
+		<li>Background:
+		<input type="radio" id="dark-color" name="color" onchange="setColor()">Dark</input>
+		<input type="radio" id="light-color" name="color" onchange="setColor()" checked="true">Light</input></li>
+	</ul>
+</nav>
+<hr>
+<div class="main-container">
+<!--side bar-->
+<div class="sidebar">
+	<button id="new" onclick="newGame()" style="display: none;">New Game</button>
+	
+	<div id="setup-space">
+		<h2>Game Setup</h2>
+		<button id="random" onclick="randomSetup()">Random Setup</button>
+		
+		<button id="start" disabled>Start!</button>
+		
+		
+	</div>
+	<p><b>Instructions:</b> Set up your fleet on the Playerboard and press Start. For each turn, click on a Computerboard tile to  try and sink the enemy fleet before yours is destroyed. </p>
+	<div id="ship-list">
+		<div class="ship-img-row" id="Carrier">
+			<div class="sidebar-ship-img">Carrier</div>
+			<div class="hit-counter"></div>
+			<div class="hit-counter"></div>
+			<div class="hit-counter"></div>
+			<div class="hit-counter"></div>
+			<div class="hit-counter"></div>
+		</div>
+		<div class="ship-img-row" id="Battleship">
+			<div class="sidebar-ship-img">Battleship</div>
+			<div class="hit-counter"></div>
+			<div class="hit-counter"></div>
+			<div class="hit-counter"></div>
+			<div class="hit-counter"></div>
+		</div>
+		<div class="ship-img-row" id="Destroyer">
+			<div class="sidebar-ship-img">Destroyer</div>
+			<div class="hit-counter"></div>
+			<div class="hit-counter"></div>
+			<div class="hit-counter"></div>
+			<div class="hit-counter"></div>
+		</div>
+		<div class="ship-img-row" id="Submarine">
+			<div class="sidebar-ship-img">Submarine</div>
+			<div class="hit-counter"></div>
+			<div class="hit-counter"></div>
+			<div class="hit-counter"></div>
+		</div>
+		<div class="ship-img-row" id="Patrol Boat">
+			<div class="sidebar-ship-img">Patrol Boat</div>
+			<div class="hit-counter"></div>
+			<div class="hit-counter"></div>
+		</div>
+	</div><br>
+	
+	<div id="turn-count" style="display: none;">Turn count: </div>
+</div>
+<!--Game area-->
+<div class="game-container">
+	<!--Player Board-->
+	<div id="player-board">
+		<h2>Player Board</h2>
+		<div id="player-row-A">
+			<div class="column" name="blank">A1</div>
+			<div class="column" name="blank">A2</div>
+			<div class="column" name="blank">A3</div>
+			<div class="column" name="blank">A4</div>
+			<div class="column" name="blank">A5</div>
+			<div class="column" name="blank">A6</div>
+			<div class="column" name="blank">A7</div>
+			<div class="column" name="blank">A8</div>
+			<div class="column" name="blank">A9</div>
+			<div class="column" name="blank">A10</div>
+		</div>
+		<div id="player-row-B">
+			<div class="column" name="blank">B1</div>
+			<div class="column" name="blank">B2</div>
+			<div class="column" name="blank">B3</div>
+			<div class="column" name="blank">B4</div>
+			<div class="column" name="blank">B5</div>
+			<div class="column" name="blank">B6</div>
+			<div class="column" name="blank">B7</div>
+			<div class="column" name="blank">B8</div>
+			<div class="column" name="blank">B9</div>
+			<div class="column" name="blank">B10</div>
+		</div>
+		<div id="player-row-C">
+			<div class="column" name="blank">C1</div>
+			<div class="column" name="blank">C2</div>
+			<div class="column" name="blank">C3</div>
+			<div class="column" name="blank">C4</div>
+			<div class="column" name="blank">C5</div>
+			<div class="column" name="blank">C6</div>
+			<div class="column" name="blank">C7</div>
+			<div class="column" name="blank">C8</div>
+			<div class="column" name="blank">C9</div>
+			<div class="column" name="blank">C10</div>
+		</div>
+		<div id="player-row-D">
+			<div class="column" name="blank">D1</div>
+			<div class="column" name="blank">D2</div>
+			<div class="column" name="blank">D3</div>
+			<div class="column" name="blank">D4</div>
+			<div class="column" name="blank">D5</div>
+			<div class="column" name="blank">D6</div>
+			<div class="column" name="blank">D7</div>
+			<div class="column" name="blank">D8</div>
+			<div class="column" name="blank">D9</div>
+			<div class="column" name="blank">D10</div>
+		</div>
+		<div id="player-row-E">
+			<div class="column" name="blank">E1</div>
+			<div class="column" name="blank">E2</div>
+			<div class="column" name="blank">E3</div>
+			<div class="column" name="blank">E4</div>
+			<div class="column" name="blank">E5</div>
+			<div class="column" name="blank">E6</div>
+			<div class="column" name="blank">E7</div>
+			<div class="column" name="blank">E8</div>
+			<div class="column" name="blank">E9</div>
+			<div class="column" name="blank">E10</div>
+		</div>
+		<div id="player-row-F">
+			<div class="column" name="blank">F1</div>
+			<div class="column" name="blank">F2</div>
+			<div class="column" name="blank">F3</div>
+			<div class="column" name="blank">F4</div>
+			<div class="column" name="blank">F5</div>
+			<div class="column" name="blank">F6</div>
+			<div class="column" name="blank">F7</div>
+			<div class="column" name="blank">F8</div>
+			<div class="column" name="blank">F9</div>
+			<div class="column" name="blank">F10</div>
+		</div>
+		<div id="player-row-G">
+			<div class="column" name="blank">G1</div>
+			<div class="column" name="blank">G2</div>
+			<div class="column" name="blank">G3</div>
+			<div class="column" name="blank">G4</div>
+			<div class="column" name="blank">G5</div>
+			<div class="column" name="blank">G6</div>
+			<div class="column" name="blank">G7</div>
+			<div class="column" name="blank">G8</div>
+			<div class="column" name="blank">G9</div>
+			<div class="column" name="blank">G10</div>
+		</div>
+		<div id="player-row-H">
+			<div class="column" name="blank">H1</div>
+			<div class="column" name="blank">H2</div>
+			<div class="column" name="blank">H3</div>
+			<div class="column" name="blank">H4</div>
+			<div class="column" name="blank">H5</div>
+			<div class="column" name="blank">H6</div>
+			<div class="column" name="blank">H7</div>
+			<div class="column" name="blank">H8</div>
+			<div class="column" name="blank">H9</div>
+			<div class="column" name="blank">H10</div>
+		</div>
+		<div id="player-row-I">
+			<div class="column" name="blank">I1</div>
+			<div class="column" name="blank">I2</div>
+			<div class="column" name="blank">I3</div>
+			<div class="column" name="blank">I4</div>
+			<div class="column" name="blank">I5</div>
+			<div class="column" name="blank">I6</div>
+			<div class="column" name="blank">I7</div>
+			<div class="column" name="blank">I8</div>
+			<div class="column" name="blank">I9</div>
+			<div class="column" name="blank">I10</div>
+		</div>
+		<div id="player-row-J">
+			<div class="column" name="blank">J1</div>
+			<div class="column" name="blank">J2</div>
+			<div class="column" name="blank">J3</div>
+			<div class="column" name="blank">J4</div>
+			<div class="column" name="blank">J5</div>
+			<div class="column" name="blank">J6</div>
+			<div class="column" name="blank">J7</div>
+			<div class="column" name="blank">J8</div>
+			<div class="column" name="blank">J9</div>
+			<div class="column" name="blank">J10</div>
+		</div>
+		<div id="player-board-comment"></div>
+	</div>
+	<!--Computer Board-->
+	<div id="computer-board">
+		<h2>Computer Board</h2>
+		<div class="computer-row-A">
+			<div class="column" name="blank">A1</div>
+			<div class="column" name="blank">A2</div>
+			<div class="column" name="blank">A3</div>
+			<div class="column" name="blank">A4</div>
+			<div class="column" name="blank">A5</div>
+			<div class="column" name="blank">A6</div>
+			<div class="column" name="blank">A7</div>
+			<div class="column" name="blank">A8</div>
+			<div class="column" name="blank">A9</div>
+			<div class="column" name="blank">A10</div>
+		</div>
+		<div class="computer-row-B">
+			<div class="column" name="blank">B1</div>
+			<div class="column" name="blank">B2</div>
+			<div class="column" name="blank">B3</div>
+			<div class="column" name="blank">B4</div>
+			<div class="column" name="blank">B5</div>
+			<div class="column" name="blank">B6</div>
+			<div class="column" name="blank">B7</div>
+			<div class="column" name="blank">B8</div>
+			<div class="column" name="blank">B9</div>
+			<div class="column" name="blank">B10</div>
+		</div>
+		<div class="computer-row-C">
+			<div class="column" name="blank">C1</div>
+			<div class="column" name="blank">C2</div>
+			<div class="column" name="blank">C3</div>
+			<div class="column" name="blank">C4</div>
+			<div class="column" name="blank">C5</div>
+			<div class="column" name="blank">C6</div>
+			<div class="column" name="blank">C7</div>
+			<div class="column" name="blank">C8</div>
+			<div class="column" name="blank">C9</div>
+			<div class="column" name="blank">C10</div>
+		</div>
+		<div class="computer-row-D">
+			<div class="column" name="blank">D1</div>
+			<div class="column" name="blank">D2</div>
+			<div class="column" name="blank">D3</div>
+			<div class="column" name="blank">D4</div>
+			<div class="column" name="blank">D5</div>
+			<div class="column" name="blank">D6</div>
+			<div class="column" name="blank">D7</div>
+			<div class="column" name="blank">D8</div>
+			<div class="column" name="blank">D9</div>
+			<div class="column" name="blank">D10</div>
+		</div>
+		<div class="computer-row-E">
+			<div class="column" name="blank">E1</div>
+			<div class="column" name="blank">E2</div>
+			<div class="column" name="blank">E3</div>
+			<div class="column" name="blank">E4</div>
+			<div class="column" name="blank">E5</div>
+			<div class="column" name="blank">E6</div>
+			<div class="column" name="blank">E7</div>
+			<div class="column" name="blank">E8</div>
+			<div class="column" name="blank">E9</div>
+			<div class="column" name="blank">E10</div>
+		</div>
+		<div class="computer-row-F">
+			<div class="column" name="blank">F1</div>
+			<div class="column" name="blank">F2</div>
+			<div class="column" name="blank">F3</div>
+			<div class="column" name="blank">F4</div>
+			<div class="column" name="blank">F5</div>
+			<div class="column" name="blank">F6</div>
+			<div class="column" name="blank">F7</div>
+			<div class="column" name="blank">F8</div>
+			<div class="column" name="blank">F9</div>
+			<div class="column" name="blank">F10</div>
+		</div>
+		<div class="computer-row-G">
+			<div class="column" name="blank">G1</div>
+			<div class="column" name="blank">G2</div>
+			<div class="column" name="blank">G3</div>
+			<div class="column" name="blank">G4</div>
+			<div class="column" name="blank">G5</div>
+			<div class="column" name="blank">G6</div>
+			<div class="column" name="blank">G7</div>
+			<div class="column" name="blank">G8</div>
+			<div class="column" name="blank">G9</div>
+			<div class="column" name="blank">G10</div>
+		</div>
+		<div class="computer-row-H">
+			<div class="column" name="blank">H1</div>
+			<div class="column" name="blank">H2</div>
+			<div class="column" name="blank">H3</div>
+			<div class="column" name="blank">H4</div>
+			<div class="column" name="blank">H5</div>
+			<div class="column" name="blank">H6</div>
+			<div class="column" name="blank">H7</div>
+			<div class="column" name="blank">H8</div>
+			<div class="column" name="blank">H9</div>
+			<div class="column" name="blank">H10</div>
+		</div>
+		<div class="computer-row-I">
+			<div class="column" name="blank">I1</div>
+			<div class="column" name="blank">I2</div>
+			<div class="column" name="blank">I3</div>
+			<div class="column" name="blank">I4</div>
+			<div class="column" name="blank">I5</div>
+			<div class="column" name="blank">I6</div>
+			<div class="column" name="blank">I7</div>
+			<div class="column" name="blank">I8</div>
+			<div class="column" name="blank">I9</div>
+			<div class="column" name="blank">I10</div>
+		</div>
+		<div class="computer-row-J">
+			<div class="column" name="blank">J1</div>
+			<div class="column" name="blank">J2</div>
+			<div class="column" name="blank">J3</div>
+			<div class="column" name="blank">J4</div>
+			<div class="column" name="blank">J5</div>
+			<div class="column" name="blank">J6</div>
+			<div class="column" name="blank">J7</div>
+			<div class="column" name="blank">J8</div>
+			<div class="column" name="blank">J9</div>
+			<div class="column" name="blank">J10</div>
+		</div>
+		<div id="computer-board-comment"></div>
+	</div>
+</div>
+</div>
+
+<script type="text/javascript" src="source.js"></script> 
+</body>
+</html>
